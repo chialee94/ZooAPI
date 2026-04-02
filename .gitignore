@@ -1,0 +1,14 @@
+# Ignore Visual Studio files
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+
+# Ignore node_modules for Angular
+node_modules/
+
+# Ignore published output
+dist/
