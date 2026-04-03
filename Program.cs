@@ -11,6 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ZooContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ZooDb")));
 
+// Add Swagger services
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 // Allow Angular to call API
 builder.Services.AddCors(options =>
 {
@@ -22,10 +26,17 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Enable Swagger in Development (or always, if you prefer)
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Enable CORS
 app.UseCors("AllowAll");
 
+// Map controllers
 app.MapControllers();
 
+// Seed database if empty
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ZooContext>();
